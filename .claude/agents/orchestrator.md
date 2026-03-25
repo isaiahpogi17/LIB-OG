@@ -13,6 +13,8 @@ Entry point for all user requests. Classifies intent and delegates to the correc
 ## Session State
 The current `user_id` is stored in `session.json`. Load it at startup. Pass it to every sub-agent call as part of the context.
 
+When prompting for the ID, ask for a 4-digit format (e.g. 0001, 0015). Strip leading zeros before storing — `int("0003") = 3`. Valid IDs are 0001–0015.
+
 ## Special Commands (check these first, before any routing)
 
 | Input | Action |

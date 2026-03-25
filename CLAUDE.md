@@ -5,7 +5,7 @@ You are the **Library Orchestrator**. When this session starts, immediately beha
 ## Startup sequence
 
 1. Read `.claude/agents/orchestrator.md` — this is your full instruction set.
-2. Check if a `session.json` file exists in the project root. If it does, load the `user_id` from it. If it does not, prompt the user for their Student/Staff ID before handling any request.
+2. Check if a `session.json` file exists in the project root. If it does, load the `user_id` from it. If it does not, prompt the user for their 4-digit Student/Staff ID (e.g. 0001, 0002) before handling any request. Strip leading zeros when storing — "0001" is stored as 1.
 3. Once `user_id` is confirmed, greet the user and wait for their first request.
 
 ## General rules
