@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Library Agent System — Test Report</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #1a1a2e; }
+
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      color: #fff;
+      padding: 36px 40px 28px;
+    }
+    header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: 0.5px; }
+    header p  { margin-top: 6px; font-size: 0.9rem; opacity: 0.75; }
+
+    .badge-row { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .badge {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 0.3px;
+    }
+    .badge.pass  { background: #22c55e; color: #fff; }
+    .badge.fail  { background: #ef4444; color: #fff; }
+    .badge.total { background: rgba(255,255,255,0.15); color: #fff; }
+    .badge.time  { background: rgba(255,255,255,0.10); color: #ccc; }
+
+    main { max-width: 1000px; margin: 32px auto; padding: 0 20px 60px; }
+
+    .suite {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .suite-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px;
+      background: #f8f9fb;
+      border-bottom: 1px solid #e8eaf0;
+    }
+    .suite-header h2 { font-size: 1rem; font-weight: 700; }
+    .suite-meta { font-size: 0.8rem; color: #666; }
+    .suite-pill {
+      padding: 3px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 700;
+    }
+    .suite-pill.pass { background: #dcfce7; color: #15803d; }
+    .suite-pill.fail { background: #fee2e2; color: #b91c1c; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left; padding: 10px 24px;
+      font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.6px; color: #888;
+      border-bottom: 1px solid #e8eaf0;
+    }
+    td { padding: 11px 24px; font-size: 0.85rem; border-bottom: 1px solid #f3f4f6; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafbff; }
+
+    .status { font-weight: 700; font-size: 0.78rem; }
+    .status.PASS { color: #16a34a; }
+    .status.FAIL { color: #dc2626; }
+    .status.ERROR { color: #d97706; }
+
+    .test-name { font-family: 'Consolas', 'Courier New', monospace; color: #374151; }
+    .test-class { color: #9ca3af; margin-right: 6px; }
+
+    .error-block {
+      background: #fff7f7; border-left: 3px solid #ef4444;
+      margin: 0 24px 12px; padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      font-family: monospace; font-size: 0.78rem;
+      color: #7f1d1d; white-space: pre-wrap; word-break: break-all;
+    }
+
+    footer {
+      text-align: center; font-size: 0.78rem; color: #aaa;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Library Agent System — Test Report</h1>
+  <p>Generated 2026-03-25 10:09:00</p>
+  <div class="badge-row">
+    <span class="badge total">Total: 75</span>
+    <span class="badge pass">Passed: 75</span>
+    <span class="badge fail">Failed: 0</span>
+    <span class="badge time">Duration: 12.45s</span>
+    <span class="badge pass">ALL PASSED</span>
+  </div>
+</header>
+
+<main>
+  
+<div class="suite">
+  <div class="suite-header">
+    <div>
+      <h2>Semantic Librarian Agent</h2>
+      <span class="suite-meta">15/15 passed &nbsp;&bull;&nbsp; 2.31s</span>
+    </div>
+    <span class="suite-pill pass">ALL PASSED</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Test</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCheckAvailability &rsaquo;</span>test available copies is non negative)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCheckAvailability &rsaquo;</span>test invalid book returns error)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCheckAvailability &rsaquo;</span>test repair book has repair status)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCheckAvailability &rsaquo;</span>test valid book returns availability)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetBookAbstract &rsaquo;</span>test invalid book returns error)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetBookAbstract &rsaquo;</span>test valid book returns abstract)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestSearchBooks &rsaquo;</span>test exact search known title)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestSearchBooks &rsaquo;</span>test exact search no match returns empty)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestSearchBooks &rsaquo;</span>test fuzzy search by genre)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestSearchBooks &rsaquo;</span>test fuzzy search result has required fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestSearchBooks &rsaquo;</span>test fuzzy search returns results)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestSearchBooks &rsaquo;</span>test search no results returns empty list)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestSuggestRelated &rsaquo;</span>test does not include source book)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestSuggestRelated &rsaquo;</span>test invalid book returns error)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestSuggestRelated &rsaquo;</span>test returns up to 3 books)
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="suite">
+  <div class="suite-header">
+    <div>
+      <h2>Space Manager Agent</h2>
+      <span class="suite-meta">15/15 passed &nbsp;&bull;&nbsp; 2.79s</span>
+    </div>
+    <span class="suite-pill pass">ALL PASSED</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Test</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCheckRoomAvailability &rsaquo;</span>test high capacity returns fewer rooms)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCheckRoomAvailability &rsaquo;</span>test result has required fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCheckRoomAvailability &rsaquo;</span>test returns list of rooms)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCheckRoomAvailability &rsaquo;</span>test rooms meet capacity requirement)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCreateAndCancelBooking &rsaquo;</span>test booking exceeds max duration is rejected)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCreateAndCancelBooking &rsaquo;</span>test booking too soon is rejected)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCreateAndCancelBooking &rsaquo;</span>test cancel booking success)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCreateAndCancelBooking &rsaquo;</span>test cancel nonexistent booking returns error)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCreateAndCancelBooking &rsaquo;</span>test create booking success)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetUpcomingBookings &rsaquo;</span>test all returned bookings are confirmed)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetUpcomingBookings &rsaquo;</span>test booking has required fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetUpcomingBookings &rsaquo;</span>test returns list)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetUpcomingBookings &rsaquo;</span>test user with no bookings returns empty)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestWeeklyHoursPolicy &rsaquo;</span>test get weekly hours returns correct fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestWeeklyHoursPolicy &rsaquo;</span>test user near limit cannot exceed 10 hours)
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="suite">
+  <div class="suite-header">
+    <div>
+      <h2>Digital Resource Navigator Agent</h2>
+      <span class="suite-meta">20/20 passed &nbsp;&bull;&nbsp; 2.93s</span>
+    </div>
+    <span class="suite-pill pass">ALL PASSED</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Test</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestDetectSourceType &rsaquo;</span>test doi url is article)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestDetectSourceType &rsaquo;</span>test generic url is webpage)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestDetectSourceType &rsaquo;</span>test pubmed url is article)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestDetectSourceType &rsaquo;</span>test result has url and type fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestDetectSourceType &rsaquo;</span>test worldcat url is book)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestFormatApaCitation &rsaquo;</span>test includes note for manual fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestFormatApaCitation &rsaquo;</span>test plain title returns book format)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestFormatApaCitation &rsaquo;</span>test url citation contains url)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestFormatApaCitation &rsaquo;</span>test url citation has retrieved date)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestFormatApaCitation &rsaquo;</span>test url returns apa format)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestFormatMlaCitation &rsaquo;</span>test includes note for manual fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestFormatMlaCitation &rsaquo;</span>test plain title returns book format)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestFormatMlaCitation &rsaquo;</span>test url citation contains url)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestFormatMlaCitation &rsaquo;</span>test url returns mla format)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestMatchDatabase &rsaquo;</span>test biomedical returns pubmed)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestMatchDatabase &rsaquo;</span>test computer science returns ieee)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestMatchDatabase &rsaquo;</span>test humanities returns jstor)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestMatchDatabase &rsaquo;</span>test result has required fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestMatchDatabase &rsaquo;</span>test returns at most 2 results)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestMatchDatabase &rsaquo;</span>test unknown topic falls back to google scholar)
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="suite">
+  <div class="suite-header">
+    <div>
+      <h2>Maintenance & Inventory Agent</h2>
+      <span class="suite-meta">25/25 passed &nbsp;&bull;&nbsp; 4.41s</span>
+    </div>
+    <span class="suite-pill pass">ALL PASSED</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Test</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCalculateLateFee &rsaquo;</span>test fee is non negative)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCalculateLateFee &rsaquo;</span>test fee respects cap)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCalculateLateFee &rsaquo;</span>test invalid loan returns error)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCalculateLateFee &rsaquo;</span>test valid loan returns fee)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCreateDamageTicket &rsaquo;</span>test available copies decremented)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCreateDamageTicket &rsaquo;</span>test creates ticket and updates book status)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestCreateDamageTicket &rsaquo;</span>test invalid book returns error)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGenerateFineNotice &rsaquo;</span>test invalid user returns error)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGenerateFineNotice &rsaquo;</span>test notice includes user name)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGenerateFineNotice &rsaquo;</span>test user with overdue returns notice)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGenerateFineNotice &rsaquo;</span>test user without overdue returns clean notice)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetInventoryHealth &rsaquo;</span>test books have required fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetInventoryHealth &rsaquo;</span>test high demand is list)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetInventoryHealth &rsaquo;</span>test low circulation is list)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetInventoryHealth &rsaquo;</span>test returns low and high demand)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetOverdueLoans &rsaquo;</span>test all overdue returns list)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetOverdueLoans &rsaquo;</span>test filter by user id)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetOverdueLoans &rsaquo;</span>test late fee does not exceed cap)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetOverdueLoans &rsaquo;</span>test late fee is non negative)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetOverdueLoans &rsaquo;</span>test overdue loan has required fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestGetOverdueLoans &rsaquo;</span>test user without overdue returns empty)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestHasOverdueItems &rsaquo;</span>test result has required fields)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestHasOverdueItems &rsaquo;</span>test suspended user overdue exceeds 14 days)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestHasOverdueItems &rsaquo;</span>test user with overdue returns true)
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="status PASS">PASS</span></td>
+          <td class="test-name">
+            <span class="test-class">TestHasOverdueItems &rsaquo;</span>test user without overdue returns false)
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+</main>
+
+<footer>Library Agent System &mdash; Test Report &mdash; 2026-03-25 10:09:00</footer>
+</body>
+</html>

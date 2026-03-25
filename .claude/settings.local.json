@@ -4,7 +4,8 @@
       "Bash(python tools.py*)",
       "Bash(python seed_db.py)",
       "Skill(update-config)",
-      "Skill(update-config:*)"
+      "Skill(update-config:*)",
+      "Bash(python test_scripts/run_all_tests.py)"
     ]
   }
 }
