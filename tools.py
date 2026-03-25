@@ -160,6 +160,19 @@ def create_booking(user_id: int, room_id: int, start_time: str, duration: float)
         end_dt = start_dt + timedelta(hours=duration)
         now = datetime.now()
 
+        # Overdue suspension check (14+ days overdue blocks new bookings)
+        overdue_row = conn.execute(
+            """
+            SELECT MAX(CAST(julianday('now') - julianday(due_date) AS INTEGER)) AS max_days
+            FROM Loans
+            WHERE user_id = ? AND return_date IS NULL AND status = 'overdue'
+            """,
+            (user_id,),
+        ).fetchone()
+        max_days = overdue_row["max_days"] if overdue_row and overdue_row["max_days"] else 0
+        if max_days >= config.OVERDUE_SUSPENSION_DAYS:
+            err(f"Booking denied: you have an item {max_days} days overdue. Return or resolve overdue items before booking a room.")
+
         # Advance notice check
         minutes_ahead = (start_dt - now).total_seconds() / 60
         if minutes_ahead < config.MIN_ADVANCE_BOOKING_MINUTES:
