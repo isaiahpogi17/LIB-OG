@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python tools.py*)",
+      "Bash(python seed_db.py)",
+      "Skill(update-config)",
+      "Skill(update-config:*)"
+    ]
+  }
+}
