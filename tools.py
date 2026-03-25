@@ -13,6 +13,8 @@ import argparse
 import json
 import sqlite3
 import sys
+import urllib.parse
+import urllib.request
 from datetime import datetime, timedelta, timezone
 
 import config
@@ -555,6 +557,73 @@ def generate_fine_notice(user_id: int):
 
 
 # ---------------------------------------------------------------------------
+# Journal search — CrossRef API (live, no key required)
+# ---------------------------------------------------------------------------
+
+CROSSREF_API = "https://api.crossref.org/works"
+CROSSREF_HEADERS = {
+    "User-Agent": "LibraryAgentSystem/1.0 (mailto:library@school.edu)",
+}
+
+
+def search_journals(topic: str, limit: int = 5):
+    """
+    Search for real academic journal articles via the CrossRef API.
+
+    Returns up to `limit` results ranked by CrossRef relevance score.
+    Each result includes title, authors, year, journal, DOI, and a direct URL.
+    """
+    params = urllib.parse.urlencode({
+        "query": topic,
+        "rows": min(limit, 20),          # CrossRef max per page is 1000, cap at 20
+        "select": "title,author,DOI,URL,published,container-title,type,score",
+    })
+    url = f"{CROSSREF_API}?{params}"
+
+    try:
+        req = urllib.request.Request(url, headers=CROSSREF_HEADERS)
+        with urllib.request.urlopen(req, timeout=10) as response:
+            raw = json.loads(response.read().decode("utf-8"))
+    except urllib.error.URLError as e:
+        err(f"CrossRef API unreachable: {e.reason}")
+    except Exception as e:
+        err(f"CrossRef API error: {str(e)}")
+
+    items = raw.get("message", {}).get("items", [])
+    results = []
+    for item in items:
+        title = (item.get("title") or ["Unknown title"])[0]
+
+        authors_raw = item.get("author") or []
+        author_parts = [
+            f"{a.get('given', '')} {a.get('family', '')}".strip()
+            for a in authors_raw[:3]
+        ]
+        authors = ", ".join(author_parts) if author_parts else "Unknown"
+        if len(authors_raw) > 3:
+            authors += " et al."
+
+        date_parts = (item.get("published") or {}).get("date-parts", [[None]])
+        year = date_parts[0][0] if date_parts and date_parts[0] else None
+
+        journal = ((item.get("container-title") or [""])[0]) or ""
+        doi = item.get("DOI", "")
+        link = item.get("URL") or (f"https://doi.org/{doi}" if doi else "")
+
+        results.append({
+            "title":   title,
+            "authors": authors,
+            "year":    year,
+            "journal": journal,
+            "doi":     doi,
+            "url":     link,
+            "source":  "CrossRef",
+        })
+
+    ok(results)
+
+
+# ---------------------------------------------------------------------------
 # CLI dispatch
 # ---------------------------------------------------------------------------
 
@@ -578,6 +647,7 @@ FUNCTIONS = {
     "get_inventory_health": get_inventory_health,
     "has_overdue_items": has_overdue_items,
     "generate_fine_notice": generate_fine_notice,
+    "search_journals": search_journals,
 }
 
 

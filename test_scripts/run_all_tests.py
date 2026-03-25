@@ -3,13 +3,17 @@ run_all_tests.py — Run all Library Agent System test suites
 Outputs results to the console AND saves an HTML report to test_results/
 
 Run from project root:
-    python test_scripts/run_all_tests.py
+    python test_scripts/run_all_tests.py              # all tests (unit only)
+    python test_scripts/run_all_tests.py --live       # include live API integration tests
+    python test_scripts/run_all_tests.py --agent navigator       # one agent only
 
 Options:
     --agent librarian       Run only librarian tests
     --agent space_manager   Run only space manager tests
     --agent navigator       Run only navigator tests
     --agent maintenance     Run only maintenance tests
+    --agent journals        Run only journal search tests
+    --live                  Also run live CrossRef API integration tests
 """
 
 import argparse
@@ -136,7 +140,7 @@ SUITE_TEMPLATE = """
   <div class="suite-header">
     <div>
       <h2>{suite_label}</h2>
-      <span class="suite-meta">{passed}/{total} passed &nbsp;&bull;&nbsp; {duration}s</span>
+      <span class="suite-meta">{passed}/{total} passed{skipped_note} &nbsp;&bull;&nbsp; {duration}s</span>
     </div>
     <span class="suite-pill {pill_class}">{pill_label}</span>
   </div>
@@ -196,9 +200,10 @@ class HTMLReporter(unittest.TestResult):
 
 
 def build_suite_html(label, reporter, duration):
-    total  = len(reporter.results)
-    passed = sum(1 for r in reporter.results if r[0] == "PASS")
-    failed = total - passed
+    skipped = sum(1 for r in reporter.results if r[0] == "SKIP")
+    total   = len(reporter.results) - skipped
+    passed  = sum(1 for r in reporter.results if r[0] == "PASS")
+    failed  = total - passed
     pill_class = "pass" if failed == 0 else "fail"
     pill_label = "ALL PASSED" if failed == 0 else f"{failed} FAILED"
 
@@ -222,10 +227,13 @@ def build_suite_html(label, reporter, duration):
         if message and status in ("FAIL", "ERROR"):
             rows.append(f'<tr><td colspan="2"><div class="error-block">{_escape(message)}</div></td></tr>')
 
+    skipped_note = f" &nbsp;&bull;&nbsp; {skipped} skipped" if skipped else ""
+
     return SUITE_TEMPLATE.format(
         suite_label=label,
         passed=passed,
         total=total,
+        skipped_note=skipped_note,
         duration=round(duration, 2),
         pill_class=pill_class,
         pill_label=pill_label,
@@ -238,14 +246,15 @@ def build_suite_html(label, reporter, duration):
 # ---------------------------------------------------------------------------
 
 SUITES = {
-    "librarian":     ("test_librarian",     "Semantic Librarian Agent"),
-    "space_manager": ("test_space_manager", "Space Manager Agent"),
-    "navigator":     ("test_navigator",     "Digital Resource Navigator Agent"),
-    "maintenance":   ("test_maintenance",   "Maintenance & Inventory Agent"),
+    "librarian":     ("test_librarian",      "Semantic Librarian Agent"),
+    "space_manager": ("test_space_manager",  "Space Manager Agent"),
+    "navigator":     ("test_navigator",      "Digital Resource Navigator Agent"),
+    "maintenance":   ("test_maintenance",    "Maintenance & Inventory Agent"),
+    "journals":      ("test_journal_search", "Journal Search — CrossRef API"),
 }
 
 
-def run(agent_filter=None):
+def run(agent_filter=None, live=False):
     targets = (
         {k: v for k, v in SUITES.items() if k == agent_filter}
         if agent_filter else SUITES
@@ -260,6 +269,10 @@ def run(agent_filter=None):
     grand_passed  = 0
     grand_failed  = 0
     report_start  = datetime.now()
+
+    # Inject --live into argv so test_journal_search picks it up via skipUnless
+    if live and "--live" not in sys.argv:
+        sys.argv.append("--live")
 
     for key, (module, label) in targets.items():
         print()
@@ -284,7 +297,7 @@ def run(agent_filter=None):
         html, passed, failed = build_suite_html(label, reporter, duration)
 
         suites_html.append(html)
-        grand_total  += len(reporter.results)
+        grand_total  += sum(1 for r in reporter.results if r[0] != "SKIP")
         grand_passed += passed
         grand_failed += failed
 
@@ -335,5 +348,10 @@ if __name__ == "__main__":
         choices=list(SUITES.keys()),
         help="Run tests for a specific agent only",
     )
+    parser.add_argument(
+        "--live",
+        action="store_true",
+        help="Include live CrossRef API integration tests (requires internet)",
+    )
     args = parser.parse_args()
-    run(agent_filter=args.agent)
+    run(agent_filter=args.agent, live=args.live)
